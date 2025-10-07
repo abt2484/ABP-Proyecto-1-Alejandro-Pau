@@ -180,9 +180,7 @@ Login - Vallparadis
 
         <select name="center" id="center" class="border-1 p-2 rounded-lg border-gray-200 bg-white" required>
           <option value="" selected hidden>Selecciona un centre</option>
-          @foreach ($centers as $center)
-            <option value="{{ $center->id }}">{{ $center->name }}</option>
-          @endforeach
+          <option value="center">Center</option>
         </select>
 
         </div>

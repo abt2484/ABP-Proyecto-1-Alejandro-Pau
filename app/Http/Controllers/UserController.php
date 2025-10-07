@@ -66,20 +66,21 @@ class UserController extends Controller
 
     public function showLoginForm()
     {
-        $centers = Center::all();
-        return view("auth.login", compact("centers"));
+        // $centers = Center::all();
+        return view("auth.login");
+
     }
 
     public function login(Request $request)
     {
         $request->validate([
-            "center" => "required|exists:centers,id",
+            "center" => "required",
             "email" => "required",
             "password" => "required"
         ]);
 
         if(Auth::attempt(["email" => $request->email, "password" => $request->password])){
-            return redirect()->route("dashboard");
+            dd("Funciona");
         } else{
             dd("Login fallido");
         }
