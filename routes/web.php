@@ -25,8 +25,8 @@ Route::middleware("auth")->group(function () {
 
     // Uniformes
     Route::get("/users/{user}/uniformities/edit", [UniformityController::class, "edit"])->name('user.uniformity.edit');
-    Route::patch("/users/{user}/uniformities/update", [UniformityController::class, "update"])->name('user.uniformity.update');
-
+    Route::patch("/users/{user}/uniformities", [UniformityController::class, "update"])->name('user.uniformity.update');
+    Route::post("/users/{user}/uniformities", [UniformityController::class, "store"])->name('user.uniformity.store');
 
     
     //Usuarios

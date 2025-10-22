@@ -21,16 +21,20 @@
     </div>
     <!-- Formulario -->
     <div class="border border-[#AFAFAF] bg-white rounded-[15px] p-5 w-[60%] text-[#0F172A]">
-        <form action="{{ route("user.uniformity.update", $userEdit->id ) }}" method="POST">
+        <form action="{{ $userEdit->uniformity ? route("user.uniformity.update", $userEdit->id ) : route("user.uniformity.store", $userEdit->id )  }}" method="POST">
             @csrf
-            @method("PATCH")
+            @if ($userEdit->uniformity)
+                @method("PATCH")
+            @else
+                @method("POST")            
+            @endif
             
             <div class="flex items-center gap-3 mb-3 font-semibold">
                 <label for="name">Pantalons:</label>
             </div>
             <select name="pants" id="pants" class="border-1 shadow-sm p-2 rounded-lg border-[#AFAFAF] w-full mb-3" required>
                 @foreach ($sizes as $size )
-                <option value="{{ $size }}">{{ $size }}</option>
+                <option value="{{ $size }}" {{ $userEdit->uniformity?->pants == $size ? "selected" : "" }} >{{ $size }}</option>
                 @endforeach
             </select>
 
@@ -39,14 +43,14 @@
             </div>
             <select name="shirt" id="shirt" class="border-1 shadow-sm p-2 rounded-lg border-[#AFAFAF] w-full mb-3" required>
                 @foreach ($sizes as $size )
-                <option value="{{ $size }}">{{ $size }}</option>
+                <option value="{{ $size }}" {{ $userEdit->uniformity?->shirt == $size ? "selected" : "" }}>{{ $size }}</option>
                 @endforeach
             </select>
         
             <div class="flex items-center gap-3 mb-3 font-semibold">
                 <label for="phone">Sabates</label>
             </div>
-            <input type="number" name="shoes" id="shoes" min="30" max="50" class="border-1 shadow-sm p-2 rounded-lg border-[#AFAFAF] w-full mb-5">
+            <input type="number" name="shoes" id="shoes" min="20" max="50" step="0.5" value="{{ old("shoes" , $userEdit->uniformity?->shoes) }}" class="border-1 shadow-sm p-2 rounded-lg border-[#AFAFAF] w-full mb-5">
         
             <div class="flex items-center gap-3 mb-3 font-semibold">
                 <label for="email">Usuari que entrega el material</label>
@@ -54,7 +58,11 @@
         
             <select name="userRenewal" id="userRenewal" class="border-1 shadow-sm p-2 rounded-lg border-[#AFAFAF] w-full mb-10" required>
                 @foreach ($users as $user )
-                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    <option value="{{ $user->id }}" 
+                        {{ $userEdit->uniformity?->renovations->last() && $userEdit->uniformity?->renovations->last()->delivered_by == $user->id ? 'selected' : '' }}>
+                        {{ $user->name }}
+                    </option>
+
                 @endforeach
             </select>
         

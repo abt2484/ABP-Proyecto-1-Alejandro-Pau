@@ -42,7 +42,7 @@ class UserController extends Controller
             'phone' => 'nullable|string|max:9',
             'role' => 'required|in:technical_team,management_team,administration,professional',
             'status' => 'required|in:active,inactive,substitute',
-            'locker' => 'required|integer',
+            'locker' => 'required|string',
             'locker_password' => 'required|string',
             'password' => 'required|min:8',
         ]);
@@ -75,7 +75,7 @@ class UserController extends Controller
             'phone' => 'nullable|string|max:9',
             'role' => 'required|in:technical_team,management_team,administration,professional',
             'status' => 'required|in:active,inactive,substitute',
-            'locker' => 'required|integer',
+            'locker' => 'required|string',
             'locker_password' => 'required|string',
             'password' => 'required|min:8',
         ]);

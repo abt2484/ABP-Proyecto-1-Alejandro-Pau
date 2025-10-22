@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger("uniformity_id");
             $table->date("renewal_date");
             $table->unsignedBigInteger("delivered_by");
-            $table->string("file");
+            $table->string("file")->nullable();
             $table->timestamps();
 
             $table->foreign("uniformity_id")->references("id")->on("uniformities");

@@ -12,6 +12,27 @@ use Maatwebsite\Excel\Facades\Excel;
 class UniformityController extends Controller
 {
 
+    public function store(Request $request, User $user)
+    {
+        $validate = $request->validate([
+            "pants" => "required",
+            "shirt" => "required",
+            "shoes" => "required",
+            "userRenewal" => "required"
+        ]);
+
+        // Se crea el nuevo registro
+        $user->uniformity()->create($validate);
+
+        // Se guarda la renovacion
+        $user->uniformity->renovations()->create([
+            "uniformity_id" => $user->uniformity->id,
+            "renewal_date" => now(),
+            "delivered_by" => $request->userRenewal,
+        ]);
+        
+        return redirect()->route("users.index")->with("success", "Uniforme renovat correctament");
+    }
     public function edit(User $user)
     {
         $sizes = ["S", "M", "L", "XL", "XXL", "3XL", "36", "38", "40", "42", "44", "46", "48", "50", "52", "54", "56", "58"];
@@ -32,6 +53,13 @@ class UniformityController extends Controller
         ]);
 
         $user->uniformity->update($validated);
+
+        // Se guarda la renovacion
+        $user->uniformity->renovations()->create([
+            "uniformity_id" => $user->uniformity->id,
+            "renewal_date" => now(),
+            "delivered_by" => $request->userRenewal,
+        ]);
 
         return redirect()->route("users.index")->with("success", "Uniforme renovat correctament");
     }
